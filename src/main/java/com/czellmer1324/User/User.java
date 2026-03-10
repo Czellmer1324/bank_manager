@@ -4,6 +4,7 @@ import com.czellmer1324.Account.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 
 public class User implements Serializable {
     private String name;
@@ -16,10 +17,10 @@ public class User implements Serializable {
         savingAccount = new SavingAccount(name);
     }
 
-    public User(String name, BigDecimal amt) {
+    public User(String name, BigDecimal checkAmt, BigDecimal saveAmt) {
         this.name = name;
-        checkingAccount = new CheckingAccount(name, amt);
-        savingAccount = new SavingAccount(name);
+        checkingAccount = new CheckingAccount(name, checkAmt);
+        savingAccount = new SavingAccount(name, saveAmt);
     }
 
     public BigDecimal viewCheckingBalance() {
@@ -45,6 +46,17 @@ public class User implements Serializable {
         return new TransferResult(from.viewBalance(), to.viewBalance(), from.getAccountType(), to.getAccountType(), true, "");
     }
 
+    public LinkedList<Transaction> getCheckingTransactions() {
+        return checkingAccount.getTransactions();
+    }
+
+    public LinkedList<Transaction> getSavingTransactions() {
+        return  savingAccount.getTransactions();
+    }
+
+    public BigDecimal applyInterest() {
+        return savingAccount.applyInterest();
+    }
 
     public void changeName(String name) {
         this.name = name;
