@@ -1,7 +1,6 @@
 package com.czellmer1324.User;
 
-import com.czellmer1324.Account.CheckingAccount;
-import com.czellmer1324.Account.SavingAccount;
+import com.czellmer1324.Account.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -31,7 +30,20 @@ public class User implements Serializable {
         return savingAccount.viewBalance();
     }
 
-    
+    public TransferResult transfer(BigDecimal amount, AccountType from) {
+        if (from.equals(AccountType.CHECKING)) return transfer(amount, checkingAccount, savingAccount);
+        else return transfer(amount, savingAccount, checkingAccount);
+    }
+
+    private TransferResult transfer(BigDecimal amount, Account from, Account to) {
+        WithdrawalResult result = from.withdraw(new Transaction(amount, "transfer", "Transfer from account"));
+        if (!result.successful()) {
+            return new TransferResult(from.viewBalance(), to.viewBalance(), from.getAccountType(), to.getAccountType(), false, "Insufficient funds in account");
+        }
+
+        to.deposit(new Transaction(amount, "transfer", "Transfer to account"));
+        return new TransferResult(from.viewBalance(), to.viewBalance(), from.getAccountType(), to.getAccountType(), true, "");
+    }
 
 
     public void changeName(String name) {
