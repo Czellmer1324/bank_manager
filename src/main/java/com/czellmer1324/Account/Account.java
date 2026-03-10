@@ -6,8 +6,15 @@ import java.math.BigDecimal;
 public abstract class Account implements Serializable {
     private BigDecimal balance;
     private String accountHolder;
-    private AccountType accountType;
-    private int accountNumber;
+    private final AccountType accountType;
+    private final int accountNumber;
+
+    public Account(String accountHolder, AccountType accountType, int accountNumber, BigDecimal balance) {
+        this.accountHolder = accountHolder;
+        this.accountType = accountType;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
 
     public void deposit(BigDecimal amount) {
         balance = balance.add(amount);
@@ -25,6 +32,11 @@ public abstract class Account implements Serializable {
 
     public BigDecimal viewBalance() {
         return balance;
+    }
+
+    // Allows for the account holder name to be updated in case of a name change
+    public void updateAccountHolder(String name) {
+        this.accountHolder = name;
     }
 
     public String getAccountHolder() {
