@@ -55,4 +55,8 @@ public abstract class Account implements Serializable {
     public int getAccountNumber() {
         return accountNumber;
     }
+
+    public LinkedList<Transaction> getTransactions() {
+        return transactions;
+    }
 }

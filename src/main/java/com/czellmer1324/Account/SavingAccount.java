@@ -22,7 +22,7 @@ public class SavingAccount extends Account{
     public BigDecimal applyInterest() {
         BigDecimal curBalance = super.viewBalance();
         BigDecimal interestAmt = curBalance.multiply(interestRate);
-        super.deposit(interestAmt);
+        deposit(new Transaction(interestAmt, "deposit", "interest accrual deposit"));
         return interestAmt;
     }
 }
