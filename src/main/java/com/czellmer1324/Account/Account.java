@@ -2,12 +2,14 @@ package com.czellmer1324.Account;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.LinkedList;
 
 public abstract class Account implements Serializable {
     private BigDecimal balance;
     private String accountHolder;
     private final AccountType accountType;
     private final int accountNumber;
+    private final LinkedList<Transaction> transactions = new LinkedList<>();
 
     public Account(String accountHolder, AccountType accountType, int accountNumber, BigDecimal balance) {
         this.accountHolder = accountHolder;
@@ -20,14 +22,16 @@ public abstract class Account implements Serializable {
         balance = balance.add(amount);
     }
 
-    public BigDecimal withdraw(BigDecimal amount) {
+    public WithdrawalResult withdraw(Transaction transaction) {
+        BigDecimal amount = transaction.amount();
         // compareTo returns -1 for less than, 0 for equal, and 1 for greater than.
         if (amount.compareTo(balance) < 0) {
-            IO.println("The withdrawal could not be completed because the amount specified is greater than the current balance.");
-            return new BigDecimal(0);
+            return new WithdrawalResult(new BigDecimal(0), false);
         }
+
+        transactions.add(transaction);
         balance = balance.subtract(amount);
-        return amount;
+        return new WithdrawalResult(amount, true);
     }
 
     public BigDecimal viewBalance() {
