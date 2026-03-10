@@ -18,8 +18,9 @@ public abstract class Account implements Serializable {
         this.balance = balance;
     }
 
-    public void deposit(BigDecimal amount) {
-        balance = balance.add(amount);
+    public void deposit(Transaction transaction) {
+        transactions.add(transaction);
+        balance = balance.add(transaction.amount());
     }
 
     public WithdrawalResult withdraw(Transaction transaction) {
