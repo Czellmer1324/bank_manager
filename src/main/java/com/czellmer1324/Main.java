@@ -2,6 +2,7 @@ package com.czellmer1324;
 
 import com.czellmer1324.Account.AccountType;
 import com.czellmer1324.Account.WithdrawalResult;
+import com.czellmer1324.User.TransferResult;
 import com.czellmer1324.User.UserManager;
 
 import java.math.BigDecimal;
@@ -92,7 +93,41 @@ public class Main {
     }
 
     private static void transfer(UserManager util) {
+        IO.println("What account would you like to transfer from?\n1. Checking\n2. Saving");
+        int selection;
+        while (true) {
+            IO.print("Your selection: ");
+            String choice = sc.nextLine();
+            try {
+                int asInt = Integer.parseInt(choice);
+                if (asInt == 1 || asInt == 2) {
+                    selection = asInt;
+                    break;
+                } else {
+                    IO.println("Please enter either 1 or 2.");
+                }
+            } catch (NumberFormatException e) {
+                IO.println("Please enter a numerical value");
+            }
+        }
 
+        IO.print("How much would you like to transfer: ");
+        String amount = sc.nextLine();
+
+        TransferResult result = (selection == 1) ? util.transfer(AccountType.CHECKING, amount) : util.transfer(AccountType.SAVING, amount);
+
+        String fromBalS = result.from() + ": " + result.fromBalance();
+        String toBalS = result.to() + ": " + result.toBalance();
+        if (result.successful()) {
+            IO.println("Transfer was successful. New account balances are: ");
+            IO.println(fromBalS);
+            IO.println(toBalS);
+        } else {
+            IO.println("Transfer was unsuccessful. Info: " + result.info());
+            IO.println("Current account balances are: ");
+            IO.println(fromBalS);
+            IO.println(toBalS);
+        }
     }
 
     private static void viewTransactions(AccountType type, UserManager util) {

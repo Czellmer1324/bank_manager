@@ -100,8 +100,9 @@ public class UserManager {
         return user.viewSavingBalance();
     }
 
-    public BigDecimal deposit(String amount, AccountType type) {
-        StringToBigDecResult asDec = convertToCurrency(amount);
+    private BigDecimal successfulConvert(String amt) {
+        StringToBigDecResult asDec = convertToCurrency(amt);
+
         if (!asDec.successful()) {
             while (!asDec.successful()) {
                 IO.print("Please enter a valid amount to deposit (type no to exit): ");
@@ -109,38 +110,40 @@ public class UserManager {
                 if (choice.equalsIgnoreCase("no")) break;
                 asDec = convertToCurrency(choice);
             }
-
         }
 
+        return asDec.amount();
+    }
+
+    public BigDecimal deposit(String amount, AccountType type) {
+        BigDecimal asDec = successfulConvert(amount);
+
         if ((type.equals(AccountType.CHECKING))) {
-            user.checkingDeposit(asDec.amount());
+            user.checkingDeposit(asDec);
         } else {
-            user.savingDeposit(asDec.amount());
+            user.savingDeposit(asDec);
         }
 
         return (type.equals(AccountType.CHECKING)) ? user.viewCheckingBalance() : user.viewSavingBalance();
     }
 
     public WithdrawalResult withdraw(String amount, AccountType type) {
-        StringToBigDecResult asDec = convertToCurrency(amount);
-        if (!asDec.successful()) {
-            while (!asDec.successful()) {
-                IO.print("Please enter a valid amount to deposit (type no to exit): ");
-                String choice = sc.nextLine();
-                if (choice.equalsIgnoreCase("no")) break;
-                asDec = convertToCurrency(choice);
-            }
-
-        }
+        BigDecimal asDec = successfulConvert(amount);
 
         WithdrawalResult result;
         if ((type.equals(AccountType.CHECKING))) {
-            result = user.checkingWithdrawal(asDec.amount());
+            result = user.checkingWithdrawal(asDec);
         } else {
-            result = user.savingWithdrawal(asDec.amount());
+            result = user.savingWithdrawal(asDec);
         }
 
         return result;
+    }
+
+    public TransferResult transfer(AccountType from, String amount) {
+        BigDecimal asDec = successfulConvert(amount);
+
+        return user.transfer(asDec, from);
     }
 
 }
