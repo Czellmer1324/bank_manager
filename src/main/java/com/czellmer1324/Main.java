@@ -146,11 +146,16 @@ public class Main {
     }
 
     private static void updateName(UserManager util) {
-
+        IO.println();
+        IO.print("What would you like to update your name too: ");
+        String name = sc.nextLine();
+        util.updateName(name);
+        IO.println("Name changed successfully");
     }
 
     private static void exit(UserManager util) {
         util.SaveUser();
+        IO.println("Thank you for using our banking application! See you soon!");
         System.exit(0);
     }
 }

@@ -6,7 +6,6 @@ import com.czellmer1324.Account.WithdrawalResult;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -45,6 +44,7 @@ public class UserManager {
         try (FileOutputStream fileOut = new FileOutputStream(fileName);
              ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
             out.writeObject(user);
+            IO.println("User saved successfully!");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -147,6 +147,10 @@ public class UserManager {
         BigDecimal asDec = successfulConvert(amount);
 
         return user.transfer(asDec, from);
+    }
+
+    public void updateName(String name) {
+        user.changeName(name);
     }
 
     public LinkedList<Transaction> getTransactions(AccountType type) {
