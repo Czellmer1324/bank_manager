@@ -91,6 +91,14 @@ public class UserManager {
         }
     }
 
+    public BigDecimal viewCheckingBalance() {
+        return user.viewCheckingBalance();
+    }
+
+    public BigDecimal viewSavingBalance() {
+        return user.viewSavingBalance();
+    }
+
     public BigDecimal deposit(String amount, AccountType type) {
         StringToBigDecResult asDec = convertToCurrency(amount);
         if (!asDec.successful()) {

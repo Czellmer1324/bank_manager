@@ -66,7 +66,10 @@ public class Main {
         }
     }
     private static void viewBalance(AccountType type, UserManager util) {
-
+        BigDecimal balance = (type.equals(AccountType.CHECKING)) ? util.viewCheckingBalance() : util.viewSavingBalance();
+        IO.println("\nThe current account balance is: " + balance);
+        IO.println("Press enter to continue");
+        sc.nextLine();
     }
 
     private static void withdraw(AccountType type, UserManager util) {
