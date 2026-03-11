@@ -1,7 +1,7 @@
 package com.czellmer1324;
 
 import com.czellmer1324.Account.AccountType;
-import com.czellmer1324.User.User;
+import com.czellmer1324.Account.WithdrawalResult;
 import com.czellmer1324.User.UserManager;
 
 import java.math.BigDecimal;
@@ -73,7 +73,15 @@ public class Main {
     }
 
     private static void withdraw(AccountType type, UserManager util) {
-
+        IO.print("How much would you like to withdraw: ");
+        String amount = sc.nextLine();
+        WithdrawalResult result = util.withdraw(amount, type);
+        if (result.successful()) {
+            IO.println("Withdraw was successful, current account balance is: " + result.currentBal());
+        } else {
+            IO.println("Withdrawal unsuccessful. Reason: " + result.extraInfo());
+            IO.println("Current account balance is: " + result.currentBal());
+        }
     }
 
     private static void deposit(AccountType type, UserManager util) {

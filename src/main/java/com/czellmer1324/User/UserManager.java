@@ -1,6 +1,7 @@
 package com.czellmer1324.User;
 
 import com.czellmer1324.Account.AccountType;
+import com.czellmer1324.Account.WithdrawalResult;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -118,6 +119,28 @@ public class UserManager {
         }
 
         return (type.equals(AccountType.CHECKING)) ? user.viewCheckingBalance() : user.viewSavingBalance();
+    }
+
+    public WithdrawalResult withdraw(String amount, AccountType type) {
+        StringToBigDecResult asDec = convertToCurrency(amount);
+        if (!asDec.successful()) {
+            while (!asDec.successful()) {
+                IO.print("Please enter a valid amount to deposit (type no to exit): ");
+                String choice = sc.nextLine();
+                if (choice.equalsIgnoreCase("no")) break;
+                asDec = convertToCurrency(choice);
+            }
+
+        }
+
+        WithdrawalResult result;
+        if ((type.equals(AccountType.CHECKING))) {
+            result = user.checkingWithdrawal(asDec.amount());
+        } else {
+            result = user.savingWithdrawal(asDec.amount());
+        }
+
+        return result;
     }
 
 }

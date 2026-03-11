@@ -26,7 +26,7 @@ public abstract class Account implements Serializable {
     public WithdrawalResult withdraw(Transaction transaction) {
         BigDecimal amount = transaction.amount();
         // compareTo returns -1 for less than, 0 for equal, and 1 for greater than.
-        if (amount.compareTo(balance) < 0) {
+        if (amount.compareTo(balance) > 0) {
             return new WithdrawalResult(new BigDecimal(0), false, "Insufficient funds");
         }
 

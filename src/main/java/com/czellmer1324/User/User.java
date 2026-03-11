@@ -39,6 +39,14 @@ public class User implements Serializable {
         savingAccount.deposit(new Transaction(amount, "deposit", "standard deposit"));
     }
 
+    public WithdrawalResult checkingWithdrawal(BigDecimal amount) {
+        return  checkingAccount.withdraw(new Transaction(amount, "withdrawal", "standard withdrawal"));
+    }
+
+    public WithdrawalResult savingWithdrawal(BigDecimal amount) {
+        return savingAccount.withdraw(new Transaction(amount, "withdrawal", "standard withdrawal"));
+    }
+
     public TransferResult transfer(BigDecimal amount, AccountType from) {
         if (from.equals(AccountType.CHECKING)) return transfer(amount, checkingAccount, savingAccount);
         else return transfer(amount, savingAccount, checkingAccount);
