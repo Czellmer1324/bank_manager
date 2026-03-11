@@ -31,6 +31,14 @@ public class User implements Serializable {
         return savingAccount.viewBalance();
     }
 
+    public void checkingDeposit(BigDecimal amount) {
+        checkingAccount.deposit(new Transaction(amount, "deposit", "standard deposit"));
+    }
+
+    public void savingDeposit(BigDecimal amount) {
+        savingAccount.deposit(new Transaction(amount, "deposit", "standard deposit"));
+    }
+
     public TransferResult transfer(BigDecimal amount, AccountType from) {
         if (from.equals(AccountType.CHECKING)) return transfer(amount, checkingAccount, savingAccount);
         else return transfer(amount, savingAccount, checkingAccount);

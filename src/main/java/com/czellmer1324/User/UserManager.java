@@ -1,5 +1,7 @@
 package com.czellmer1324.User;
 
+import com.czellmer1324.Account.AccountType;
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -87,6 +89,27 @@ public class UserManager {
         } catch (NumberFormatException e) {
             return new StringToBigDecResult(new BigDecimal(0), false);
         }
+    }
+
+    public BigDecimal deposit(String amount, AccountType type) {
+        StringToBigDecResult asDec = convertToCurrency(amount);
+        if (!asDec.successful()) {
+            while (!asDec.successful()) {
+                IO.print("Please enter a valid amount to deposit (type no to exit): ");
+                String choice = sc.nextLine();
+                if (choice.equalsIgnoreCase("no")) break;
+                asDec = convertToCurrency(choice);
+            }
+
+        }
+
+        if ((type.equals(AccountType.CHECKING))) {
+            user.checkingDeposit(asDec.amount());
+        } else {
+            user.savingDeposit(asDec.amount());
+        }
+
+        return (type.equals(AccountType.CHECKING)) ? user.viewCheckingBalance() : user.viewSavingBalance();
     }
 
 }

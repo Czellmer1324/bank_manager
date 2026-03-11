@@ -4,6 +4,7 @@ import com.czellmer1324.Account.AccountType;
 import com.czellmer1324.User.User;
 import com.czellmer1324.User.UserManager;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
@@ -73,7 +74,10 @@ public class Main {
     }
 
     private static void deposit(AccountType type, UserManager util) {
-
+        IO.print("How much would you like to deposit: ");
+        String amount = sc.nextLine();
+        BigDecimal balance = util.deposit(amount, type);
+        IO.println("Your new account balance is: " + balance);
     }
 
     private static void transfer(UserManager util) {
