@@ -63,4 +63,8 @@ public class User implements Serializable {
         checkingAccount.updateAccountHolder(name);
         savingAccount.updateAccountHolder(name);
     }
+
+    public String getName() {
+        return name;
+    }
 }
