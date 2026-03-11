@@ -25,6 +25,7 @@ public class CheckingAccount extends Account{
             return new WithdrawalResult(balance, false, "Withdrawal would bring account below -100");
         }
 
+        transactions.add(transaction);
         balance = balance.subtract(amount);
         return new WithdrawalResult(balance, true, "");
     }

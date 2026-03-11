@@ -1,11 +1,13 @@
 package com.czellmer1324;
 
 import com.czellmer1324.Account.AccountType;
+import com.czellmer1324.Account.Transaction;
 import com.czellmer1324.Account.WithdrawalResult;
 import com.czellmer1324.User.TransferResult;
 import com.czellmer1324.User.UserManager;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
@@ -67,6 +69,7 @@ public class Main {
         }
     }
     private static void viewBalance(AccountType type, UserManager util) {
+        IO.println();
         BigDecimal balance = (type.equals(AccountType.CHECKING)) ? util.viewCheckingBalance() : util.viewSavingBalance();
         IO.println("\nThe current account balance is: " + balance);
         IO.println("Press enter to continue");
@@ -74,6 +77,7 @@ public class Main {
     }
 
     private static void withdraw(AccountType type, UserManager util) {
+        IO.println();
         IO.print("How much would you like to withdraw: ");
         String amount = sc.nextLine();
         WithdrawalResult result = util.withdraw(amount, type);
@@ -86,6 +90,7 @@ public class Main {
     }
 
     private static void deposit(AccountType type, UserManager util) {
+        IO.println();
         IO.print("How much would you like to deposit: ");
         String amount = sc.nextLine();
         BigDecimal balance = util.deposit(amount, type);
@@ -93,6 +98,7 @@ public class Main {
     }
 
     private static void transfer(UserManager util) {
+        IO.println();
         IO.println("What account would you like to transfer from?\n1. Checking\n2. Saving");
         int selection;
         while (true) {
@@ -131,7 +137,12 @@ public class Main {
     }
 
     private static void viewTransactions(AccountType type, UserManager util) {
+        LinkedList<Transaction> transactions = util.getTransactions(type);
 
+        IO.println();
+        for (Transaction t : transactions) {
+            IO.println(t);
+        }
     }
 
     private static void updateName(UserManager util) {

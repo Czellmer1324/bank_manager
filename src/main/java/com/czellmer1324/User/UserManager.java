@@ -1,10 +1,13 @@
 package com.czellmer1324.User;
 
 import com.czellmer1324.Account.AccountType;
+import com.czellmer1324.Account.Transaction;
 import com.czellmer1324.Account.WithdrawalResult;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class UserManager {
@@ -144,6 +147,10 @@ public class UserManager {
         BigDecimal asDec = successfulConvert(amount);
 
         return user.transfer(asDec, from);
+    }
+
+    public LinkedList<Transaction> getTransactions(AccountType type) {
+        return (type.equals(AccountType.CHECKING)) ? user.getCheckingTransactions() : user.getSavingTransactions();
     }
 
 }
