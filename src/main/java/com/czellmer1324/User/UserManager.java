@@ -13,6 +13,10 @@ public class UserManager {
         this.user =  loadUser();
     }
 
+    public String getName() {
+        return user.getName();
+    }
+
     private User loadUser() {
         User user;
         File file = new File(fileName);
@@ -68,7 +72,7 @@ public class UserManager {
         }
     }
 
-    private StringToBigDecResult convertToCurrency(String number) {
+    private static StringToBigDecResult convertToCurrency(String number) {
         try {
             return new StringToBigDecResult(new BigDecimal(number), true);
         } catch (NumberFormatException e) {
