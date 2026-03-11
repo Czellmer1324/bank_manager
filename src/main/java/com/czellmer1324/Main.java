@@ -1,6 +1,7 @@
 package com.czellmer1324;
 
 import com.czellmer1324.Account.AccountType;
+import com.czellmer1324.User.User;
 import com.czellmer1324.User.UserManager;
 
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class Main {
         while (true) {
             IO.println("\nWhat would you like to do?");
             printOptions();
-            getChoice();
+            getChoice(manager);
         }
     }
 
@@ -31,7 +32,7 @@ public class Main {
         IO.println("11. Exit application");
     }
 
-    private static void getChoice() {
+    private static void getChoice(UserManager util) {
         int selection;
         while (true) {
             IO.print("Your selection: ");
@@ -50,44 +51,45 @@ public class Main {
         }
 
         switch (selection) {
-            case 1 -> viewBalance(AccountType.CHECKING);
-            case 2 -> viewBalance(AccountType.SAVING);
-            case 3 -> withdraw(AccountType.CHECKING);
-            case 4 -> deposit(AccountType.CHECKING);
-            case 5 -> withdraw(AccountType.SAVING);
-            case 6 -> deposit(AccountType.SAVING);
-            case 7 -> transfer();
-            case 8 -> viewTransactions(AccountType.CHECKING);
-            case 9 -> viewTransactions(AccountType.SAVING);
-            case 10 -> updateName();
-            case 11 -> exit();
+            case 1 -> viewBalance(AccountType.CHECKING, util);
+            case 2 -> viewBalance(AccountType.SAVING, util);
+            case 3 -> withdraw(AccountType.CHECKING, util);
+            case 4 -> deposit(AccountType.CHECKING, util);
+            case 5 -> withdraw(AccountType.SAVING, util);
+            case 6 -> deposit(AccountType.SAVING, util);
+            case 7 -> transfer(util);
+            case 8 -> viewTransactions(AccountType.CHECKING, util);
+            case 9 -> viewTransactions(AccountType.SAVING, util);
+            case 10 -> updateName(util);
+            case 11 -> exit(util);
         }
     }
-    private static void viewBalance(AccountType type) {
+    private static void viewBalance(AccountType type, UserManager util) {
 
     }
 
-    private static void withdraw(AccountType type) {
+    private static void withdraw(AccountType type, UserManager util) {
 
     }
 
-    private static void deposit(AccountType type) {
+    private static void deposit(AccountType type, UserManager util) {
 
     }
 
-    private static void transfer() {
+    private static void transfer(UserManager util) {
 
     }
 
-    private static void viewTransactions(AccountType type) {
+    private static void viewTransactions(AccountType type, UserManager util) {
 
     }
 
-    private static void updateName() {
+    private static void updateName(UserManager util) {
 
     }
 
-    private static void exit() {
-
+    private static void exit(UserManager util) {
+        util.SaveUser();
+        System.exit(0);
     }
 }

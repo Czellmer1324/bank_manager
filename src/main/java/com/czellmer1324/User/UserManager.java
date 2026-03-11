@@ -35,6 +35,15 @@ public class UserManager {
         return user;
     }
 
+    public void SaveUser() {
+        try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private User createUser() {
         IO.println("We have to create an account for you!");
         IO.print("Please enter your full name: ");
