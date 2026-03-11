@@ -33,7 +33,8 @@ public class Main {
         IO.println("8. View checking account transactions");
         IO.println("9. View saving account transactions");
         IO.println("10. Update your name");
-        IO.println("11. Exit application");
+        IO.println("11. Apply interest to saving account");
+        IO.println("12. Exit application");
     }
 
     private static void getChoice(UserManager util) {
@@ -43,11 +44,11 @@ public class Main {
             String choice = sc.nextLine();
             try {
                 int asInt = Integer.parseInt(choice);
-                if (asInt >= 1 && asInt <= 11) {
+                if (asInt >= 1 && asInt <= 12) {
                     selection = asInt;
                     break;
                 } else {
-                    IO.println("Please enter a number between 1 and 11.");
+                    IO.println("Please enter a number between 1 and 12.");
                 }
             } catch (NumberFormatException e) {
                 IO.println("Please enter a numerical value");
@@ -65,7 +66,8 @@ public class Main {
             case 8 -> viewTransactions(AccountType.CHECKING, util);
             case 9 -> viewTransactions(AccountType.SAVING, util);
             case 10 -> updateName(util);
-            case 11 -> exit(util);
+            case 11 -> applyInterest(util);
+            case 12 -> exit(util);
         }
     }
     private static void viewBalance(AccountType type, UserManager util) {
@@ -151,6 +153,13 @@ public class Main {
         String name = sc.nextLine();
         util.updateName(name);
         IO.println("Name changed successfully");
+    }
+
+    private static void applyInterest(UserManager util) {
+        IO.println();
+        BigDecimal interestAmt = util.applyInterest();
+        IO.println(interestAmt + " in interest has been added to your account.");
+        IO.println("New saving account balance is: " + util.viewSavingBalance());
     }
 
     private static void exit(UserManager util) {

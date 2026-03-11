@@ -153,6 +153,10 @@ public class UserManager {
         user.changeName(name);
     }
 
+    public BigDecimal applyInterest() {
+        return user.applyInterest();
+    }
+
     public LinkedList<Transaction> getTransactions(AccountType type) {
         return (type.equals(AccountType.CHECKING)) ? user.getCheckingTransactions() : user.getSavingTransactions();
     }

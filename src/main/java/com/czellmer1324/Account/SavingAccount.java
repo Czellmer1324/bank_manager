@@ -1,6 +1,7 @@
 package com.czellmer1324.Account;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 public class SavingAccount extends Account{
@@ -20,7 +21,7 @@ public class SavingAccount extends Account{
     }
 
     public BigDecimal applyInterest() {
-        BigDecimal interestAmt = balance.multiply(interestRate);
+        BigDecimal interestAmt = (balance.multiply(interestRate)).setScale(2, RoundingMode.HALF_UP);
         deposit(new Transaction(interestAmt, "deposit", "interest accrual deposit"));
         return interestAmt;
     }
